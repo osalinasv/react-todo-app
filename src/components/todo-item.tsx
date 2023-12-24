@@ -10,10 +10,12 @@ import {
 } from "@radix-ui/react-icons";
 import { FormEvent, useState } from "react";
 
-function TodoItemActions({
-  onEdit,
-  onRemove,
-}: { onEdit: () => void; onRemove: () => void }) {
+type TodoItemActionsProps = {
+  onEdit: () => void;
+  onRemove: () => void;
+};
+
+function TodoItemActions({ onEdit, onRemove }: TodoItemActionsProps) {
   return (
     <>
       <Button
@@ -41,7 +43,11 @@ function TodoItemActions({
   );
 }
 
-function TodoItemEditActions({ onCancel }: { onCancel: () => void }) {
+type TodoItemEditActionsProps = {
+  onCancel: () => void;
+};
+
+function TodoItemEditActions({ onCancel }: TodoItemEditActionsProps) {
   return (
     <>
       <Button
@@ -68,9 +74,21 @@ function TodoItemEditActions({ onCancel }: { onCancel: () => void }) {
   );
 }
 
-export function TodoItem({ id, content, completed }: Todo) {
+type TodoItemProps = Todo & {
+  editTodo: (content: string) => void;
+  removeTodo: () => void;
+  setCompleted: (completed: boolean) => void;
+};
+
+export function TodoItem({
+  id,
+  content,
+  completed,
+  setCompleted,
+  removeTodo,
+  editTodo,
+}: TodoItemProps) {
   console.log("RENDER", "TodoItem", id);
-  const { setCompleted, removeTodo, editTodo } = useTodoContext();
   const [editing, setEditing] = useState(false);
 
   const onEditSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -80,7 +98,7 @@ export function TodoItem({ id, content, completed }: Todo) {
     const newContent = formData.get("content");
     if (!newContent) return false;
 
-    editTodo(id, newContent as string);
+    editTodo(newContent as string);
     setEditing(false);
   };
 
@@ -97,7 +115,7 @@ export function TodoItem({ id, content, completed }: Todo) {
         disabled={editing}
         aria-checked={completed}
         className="group shrink-0 size-6 rounded-full text-accent-foreground"
-        onClick={() => setCompleted(id, !completed)}
+        onClick={() => setCompleted(!completed)}
       >
         <CheckIcon className="opacity-0 group-aria-checked:opacity-100 transition-opacity" />
       </Button>
@@ -122,7 +140,7 @@ export function TodoItem({ id, content, completed }: Todo) {
       ) : (
         <TodoItemActions
           onEdit={() => setEditing(true)}
-          onRemove={() => removeTodo(id)}
+          onRemove={() => removeTodo()}
         />
       )}
     </form>

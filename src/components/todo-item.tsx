@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useTodoContext } from "@/hooks/todos/context";
 import type { Todo } from "@/types/todo";
 import {
   CheckIcon,
@@ -8,7 +7,7 @@ import {
   Pencil1Icon,
   TrashIcon,
 } from "@radix-ui/react-icons";
-import { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 
 type TodoItemActionsProps = {
   onEdit: () => void;
@@ -146,3 +145,5 @@ export function TodoItem({
     </form>
   );
 }
+
+export const TodoItemMemo = React.memo(TodoItem);

@@ -1,9 +1,10 @@
 import { AddTodo } from "@/components/add-todo";
-import { TodoItem } from "@/components/todo-item";
+import { TodoItemMemo } from "@/components/todo-item";
 import { TodoListContainer } from "@/components/todo-list";
 import { useTodoContext } from "@/hooks/todos/context";
 import { TodoContextProvider } from "@/hooks/todos/provider";
 import { Todo } from "@/types/todo";
+import { useCallback } from "react";
 
 function AddTodoWithContext() {
   console.log("RENDER", "AddTodoWithContext");
@@ -15,12 +16,27 @@ function TodoItemWithContext(todo: Todo) {
   console.log("RENDER", "TodoItemWithContext");
   const { setCompleted, removeTodo, editTodo } = useTodoContext();
 
+  const onEditTodo = useCallback(
+    (content: string) => editTodo(todo.id, content),
+    [editTodo, todo.id],
+  );
+
+  const onRemoveTodo = useCallback(
+    () => removeTodo(todo.id),
+    [removeTodo, todo.id],
+  );
+
+  const onSetCompleted = useCallback(
+    (completed: boolean) => setCompleted(todo.id, completed),
+    [setCompleted, todo.id],
+  );
+
   return (
-    <TodoItem
+    <TodoItemMemo
       {...todo}
-      editTodo={(c) => editTodo(todo.id, c)}
-      removeTodo={() => removeTodo(todo.id)}
-      setCompleted={(c) => setCompleted(todo.id, c)}
+      editTodo={onEditTodo}
+      removeTodo={onRemoveTodo}
+      setCompleted={onSetCompleted}
     />
   );
 }

@@ -1,3 +1,8 @@
+import {
+  createNewTodo,
+  loadTodosFromLocalStorage,
+  storeTodosInLocalStorage,
+} from "@/lib/local";
 import type { Todo } from "@/types/todo";
 import { useReducer } from "react";
 
@@ -39,10 +44,7 @@ function reduceTodos(todos: Todo[], action: Action) {
 
   switch (action.type) {
     case ACTIONS.ADD:
-      newTodos = [
-        { id: new Date().getTime(), content: action.content, completed: false },
-        ...newTodos,
-      ];
+      newTodos = [createNewTodo(action.content), ...newTodos];
       break;
     case ACTIONS.EDIT:
       newTodos = newTodos.map((todo) => {
@@ -67,19 +69,8 @@ function reduceTodos(todos: Todo[], action: Action) {
       break;
   }
 
-  localStorage.setItem("todos", JSON.stringify(newTodos));
+  storeTodosInLocalStorage(newTodos);
   return newTodos;
-}
-
-function loadTodosFromLocalStorage(): Todo[] {
-  try {
-    const local = localStorage.getItem("todos");
-    if (local) return JSON.parse(local);
-  } catch (error) {
-    console.error(error);
-  }
-
-  return [];
 }
 
 export function useTodoReducer() {

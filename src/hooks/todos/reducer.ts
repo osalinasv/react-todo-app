@@ -1,5 +1,5 @@
+import type { Todo } from "@/types/todo";
 import { useReducer } from "react";
-import type { Todo } from "../../types/todo";
 
 export const ACTIONS = {
   ADD: "add",

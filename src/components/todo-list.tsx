@@ -1,4 +1,4 @@
-import { useTodoContext } from "../hooks/todos/context";
+import { useTodoContext } from "@/hooks/todos/context";
 import { TodoItem } from "./todo-item";
 
 export function TodoList() {

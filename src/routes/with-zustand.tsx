@@ -61,6 +61,28 @@ function TodosWithZustand() {
   console.log("RENDER", "TodosWithZustand");
   return (
     <>
+      <div className="grid gap-4 max-w-prose mx-auto text-muted-foreground mb-8">
+        <p>
+          As long as there are no dependency constraints in your project, I'd
+          recommend going with Zustand 90% of the time. Not only is the API easy
+          to follow, but you get granularity for free.
+        </p>
+        <p>
+          Note how the AddTodo component renders just once in this example. And
+          with seldom use of memoization you can achieve atomic renders for each
+          todo item as well. At the end of the day memoization is good, as long
+          as you use it sparingly and with knowledge.
+        </p>
+        <p>
+          In certain setups, it can be useful to rerun the state's
+          initialization function every time the provider is mounted. Since
+          Zustand has no provider and lives outside React's lifecycle, the setup
+          function runs just once. In this example, this causes Zustands' state
+          to not be aware of changes to local storage that were made in the
+          other tab.
+        </p>
+      </div>
+
       <AddTodoWithZustand />
       <TodoListWithZustand />
     </>

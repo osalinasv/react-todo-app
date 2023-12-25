@@ -1,6 +1,7 @@
 # Todo List App
 
-> A simple todo app using React's useContext and useReducer, with persistance using local storage.
+> A simple todo app using React in two flavors:  
+> Using useContext + useReducer, and using Zustand
 
 ## Running the app
 

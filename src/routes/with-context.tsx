@@ -60,6 +60,24 @@ function TodosWithContext() {
   console.log("RENDER", "TodosWithContext");
   return (
     <TodoContextProvider>
+      <div className="grid gap-4 max-w-prose mx-auto text-muted-foreground mb-8">
+        <p>
+          For simpler cases you can achieve a lot with useContext. The obvious
+          benefit is not needing any libraries other than React. However, you'll
+          quickly realize state updates are not granular.
+        </p>
+        <p>
+          In this example, the AddTodo component will re-render every time the
+          context is updated because it needs to consume the context to get the
+          addTodo method (even when we know this method never changes).
+        </p>
+        <p>
+          Of course you can wrap the add method with useCallback and then wrap
+          AddTodo with memo, but this is only covering the real issue and can
+          quickly devolve que quality of your codebase.
+        </p>
+      </div>
+
       <AddTodoWithContext />
       <TodoListWithContext />
     </TodoContextProvider>
